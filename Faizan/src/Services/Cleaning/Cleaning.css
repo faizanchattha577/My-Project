@@ -1,0 +1,6 @@
+.c-row{
+    background-color: #f1f5fd;
+    display: flex;
+    justify-content: center;
+    padding-bottom:25px ;
+}

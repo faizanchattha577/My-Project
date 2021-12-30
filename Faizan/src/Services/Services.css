@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@1,200&family=Ubuntu:ital,wght@1,300&display=swap');
+
+.firstdiv {
+  background: linear-gradient(135deg, #850c62, #f80759);
+  width: 100%;
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.firsth1 {
+  color: lavenderblush;
+}
+.firsth2 {
+  color: lavenderblush;
+  float: top;
+}
+.imgtag {
+  float: right;
+  padding-left: 310px;
+}
+
+
+/* ------------Text CSS------------- */
+
+.firstheading{
+  font-size: 2.5rem;
+}
+
+.HeadingText{
+  font-size: 2rem;
+  font-family: 'Mulish', sans-serif;
+   text-align: center;
+   margin-top: 15px;
+}
+.ParaText{
+  font-size: 1.7rem;
+  text-align: center;
+  font-family: 'Mulish', sans-serif;
+
+}

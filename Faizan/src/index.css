@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@1,200&family=Ubuntu:ital,wght@1,300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins",sans-serif;
+}
+:root{
+    --bgcolor:#f1f5fd;
+    --primarr-color:#6f5de7;
+    --text-color:#828286;
+    --main-text-color:#333333
+        
+}
+
+html{
+    font-size: 62.5%;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ color: #333333;
+}
+ /*-------------NvaBar------------*/
+.navbar-bg{
+
+ background-color: var(--bgcolor);
+ padding: 2rem 0  ;
+ z-index: 99;
+ position: relative;
+
+}
+.navbar-brand{
+    font-size: 2.5rem !important;
+}
+.navbar li{
+    padding: 0 2rem;
+}
+.navbar li a{
+  font-size: 1.8rem;
+  font-weight: lighter;
+}
+.navbar li a:hover{
+    color: var(--primarr-color)!important;
+    text-shadow:0 0.2rem 0.3rem !important;
+}
+.style {
+    width: 12rem !important;
+    height: 4rem !important;
+    border-radius: 4rem !important;
+    color: #fff !important;
+    background-color: var(--primarr-color) !important;
+    text-transform: capitalize !important;
+    font-size: 1.8rem !important;
+  
+}
+.style:first-child{
+    margin-right: 2rem !important;
+}
+.style:hover{
+    border: 0.1rem solid var(--primarr-color) !important;
+    background-color: transparent !important;
+    color:var(--primarr-color ) !important;
+    box-shadow: 0 0.2rem 0.5rem rgba(183,171,255,0.5) !important;
+
+}
+
+
+/*----------------Hero Section---------------------------*/
+.input-group{
+    position: relative !important;
+
+}
+.form-control-text{
+position: absolute;
+height: 4rem;
+border: none;
+outline-style: none;
+padding-left: 1.5rem !important;
+font-size: 1.6rem;
+font-weight: lighter;
+
+}
+.round{
+    border-radius: 5rem;
+}
+
+.input-group-button{
+position: absolute;
+right: 21%;
+top: -4%;
+color: #fff;
+font-size: 1.3rem;
+background-color: var(--primarr-color);
+height: 4rem;
+width: 15%;
+border-radius: 2rem !important;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+
+.Overall{
+    background-color: var(--bgcolor);
+    padding-bottom: 15%;
+}
+
+.header{
+    min-height: 100vh !important;
+    width: 100% !important;
+}
+.main-hero-container{
+    height: 80vh;
+    display: flex;
+  
+}
+.main-hero-container h1{
+    text-transform: capitalize;
+    font-weight: bolder;
+}
+.main-hero-para{
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin: 3rem 0 5rem 0;
+    font-weight: lighter;
+    width:75%
+}
+.main-hero-container h3{
+    font-weight: lighter;
+}
+.main-images{
+    position: relative;
+}
+.main-images img{
+    width: 70%;
+    height: 90%;
+    margin-top: 10rem;
+    box-shadow: 0 0.8rem 0.8rem rgba(0,0,0,0.25);
+    border-radius: 1.5rem;
+    position: absolute;
+
+}
+
+.main-images .img-2{
+    position: absolute;
+    width: 50%;
+    height:35%;
+   left: 65%;
+   top: -15%;
+   box-shadow: 0 0.8rem 0.8rem rgba(0,0,0,0.25);
+}
+
+/* ---------------------HOWITWORKS------------------- */
+.work-container .main-heading{
+font-size: 3rem;
+font-weight: bolder;
+margin-bottom: 4rem;
+word-spacing: 1rem;
+}
+.work-container {
+    width: 50vw;
+     height: 30rem; 
+    box-shadow: 0 0.4rem 1.2rem rgba(0,0,0, 0.1);
+    margin-top: -10rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+.work-container-subdiv{
+    padding: 0 6rem;
+}
+.work-container .sub-heading{
+    font-size: 2rem;
+    font-weight: normal;
+    
+}
+.fontAwesome{
+    font-size: 2.3rem;
+    color: var(--primarr-color);
+    width: 6rem;
+    height: 6rem;
+    border-radius: 60%;
+    background-color: var(--bgcolor);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    margin: 2rem auto;
+    
+}
+
+
