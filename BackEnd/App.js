@@ -1,11 +1,12 @@
 const express = require("express");
-const bodyParser = require("body-Parser");
-const mongoose = require("mongoose");
-const UserRouter = require("./Routes/UserRouter");
-const OrderRouter=require("./Routes/OrderRoutes")
-
 const app = express();
-app.use(bodyParser.json());
+const userRouter = require("./routes/userRouter");
+const orderRouter = require("./routes/orderRouter")
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json({ extended: true }));
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -16,16 +17,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/user", UserRouter);
-app.use("/order", OrderRouter);
-
+app.use("/user", userRouter);
+app.use("/order", orderRouter)
 
 mongoose
-  .connect("mongodb://localhost:27017/eworker")
+  .connect("mongodb://localhost:27017/worker")
   .then(() => {
     console.log("connected");
     app.listen(5000);
   })
   .catch((err) => {
-    console.log("Error", err);
+    console.log("error", err);
   });

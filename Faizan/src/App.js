@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import NavBar from "./Home/NavBar";
@@ -11,13 +11,25 @@ import Signup from "./Signup/Signup";
 import Login from "./Login/Login";
 import Cart from "./Cart/Cart";
 import Appointment from "./Appointment/Appointment";
-import FormSubmit from "./FormSubmit/FormSubmit"
-
+import FormSubmit from "./FormSubmit/FormSubmit";
+import {AuthContext} from './auth'
 
 export const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
+
+  const login = useCallback((id) => {
+    setIsLoggedIn(true);
+    setUserId(id);
+  }, []);
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+    setUserId(null);
+  }, []);
+
   const [cart, SetCart] = useState([]);
   //Date
-  const[gDate,setgDate]= useState("");
+  const [gDate, setgDate] = useState("");
   //Bill
   const [gbill, setGBill] = useState(0);
   const CartHandler = (res) => {
@@ -33,7 +45,14 @@ export const App = () => {
     });
   };
   return (
-    <>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
+    >
       <div>
         <div>
           <NavBar cart={cart} />
@@ -48,19 +67,25 @@ export const App = () => {
             <Route exact path="/Signup/" component={Signup} />
             <Route exact path="/Login/" component={Login} />
             <Route exact path="/Appointment/">
-              <Appointment setDate={setgDate}/>
-          </Route> 
+              <Appointment setDate={setgDate} />
+            </Route>
             <Route exact path="/FormSubmit/">
-              <FormSubmit sBill={gbill} gDate={gDate}/>
-            </Route>  
+              <FormSubmit sBill={gbill} gDate={gDate} />
+            </Route>
             <Route exact path="/Cart/">
-              <Cart cart={cart} removeCart={removeCart} SetCart={SetCart} sBill={gbill} setSBill= {setGBill}/>
+              <Cart
+                cart={cart}
+                removeCart={removeCart}
+                SetCart={SetCart}
+                sBill={gbill}
+                setSBill={setGBill}
+              />
             </Route>
             <Redirect to="/" />
           </Switch>
         </div>
       </div>
-    </>
+    </AuthContext.Provider>
   );
 };
 export default App;

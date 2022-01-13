@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
-import Validation from "./Validation";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../auth";
 
-const Login = ({ submitForm}) => {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
- 
+const Login = ({ submitForm }) => {
+  const context = useContext(AuthContext);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.Email]: e.target.value,
-    });
-  };
-
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
-    
-  };
+    //console.log(email, password);
 
+    try {
+      const response = await fetch(
+        `http://localhost:5000/user/get/${email}/${password}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseData = await response.json();
+      
+      if (responseData.status !== 200) {
+      }
+
+      context.login(responseData._id);
+      // redirect 
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -33,17 +44,16 @@ const Login = ({ submitForm}) => {
             <h2 className="title"> Login Account</h2>
           </div>
           <form className="form-wrapper" onSubmit={handleFormSubmit}>
-           
             <div className="Email">
               <label className="label">Email</label>
               <input
                 className="input"
                 type="email"
                 name="email"
-                value={values.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {errors.Email && <p className="errors">{errors.Email}</p>}
+              {/* {errors.Email && <p className="errors">{errors.Email}</p>} */}
             </div>
             <div className="Password">
               <label className="label">Password</label>
@@ -51,23 +61,19 @@ const Login = ({ submitForm}) => {
                 className="input"
                 type="password"
                 name="password"
-                value={values.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              {errors.password && <p className="errors">{errors.password}</p>}
+              {/* {errors.password && <p className="errors">{errors.password}</p>} */}
             </div>
             <div>
-
-              <button
-                className="submit"
-              >
-
-                Login
-              </button>
-               <br />
+              <button className="submit">Login</button>
+              <br />
               <div>
-                <Link to="/Signup"> <p>Register Now</p></Link>
-                
+                <Link to="/Signup">
+                  {" "}
+                  <p>Register Now</p>
+                </Link>
               </div>
             </div>
           </form>

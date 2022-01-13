@@ -3,52 +3,38 @@ import "./Signup.css";
 import Validation from "./Validation";
 import { Link } from "react-router-dom";
 
-const Signup = ({ submitForm}) => {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-    PhoneNumber:"",
-  });
-  const [errors, setErrors] = useState({});
- 
+const Signup = ({ submitForm }) => {
+  const [fullname, setFullName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [phonenumber, setPhoneNumber] = useState();
 
-  const handleChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFormSubmit = async(e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
-    console.log(values);
+    //console.log(fullname, email, password, phonenumber);
+
     try {
-     
-      const response = await fetch(
-        "http://localhost:5000/user/add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: values.fullname,
-            email: values.email,
-            phone: values.phone,
-            password: values.password,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/adduser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullname,
+          password: password,
+          email: email,
+          phonenumber: phonenumber,
+        }),
+      });
 
       const responseData = await response.json();
-  }
-  catch (err) {
-    console.log(err)
-  }
-}
+      //console.log(responseData);
 
-
+      //redirect to login
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -64,10 +50,10 @@ const Signup = ({ submitForm}) => {
                 className="input"
                 type="text"
                 name="fullname"
-                value={values.fullname}
-                onChange={handleChange}
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
               />
-              {errors.fullname && <p className="errors text-danger">{errors.fullname}</p>}
+              {/* {errors.fullname && <p className="errors text-danger">{errors.fullname}</p>} */}
             </div>
 
             <div className="Email">
@@ -76,10 +62,10 @@ const Signup = ({ submitForm}) => {
                 className="input"
                 type="email"
                 name="email"
-                value={values.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {errors.Email && <p className="errors">{errors.Email}</p>}
+              {/* {errors.Email && <p className="errors">{errors.Email}</p>} */}
             </div>
             <div className="Password">
               <label className="label">Password</label>
@@ -87,10 +73,10 @@ const Signup = ({ submitForm}) => {
                 className="input"
                 type="password"
                 name="password"
-                value={values.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              {errors.password && <p className="errors">{errors.password}</p>}
+              {/* {errors.password && <p className="errors">{errors.password}</p>} */}
             </div>
             <div className="PhoneNumber">
               <label className="label">PhoneNumber</label>
@@ -98,23 +84,19 @@ const Signup = ({ submitForm}) => {
                 className="input"
                 type="tel"
                 name="PhoneNumber"
-                value={values.PhoneNumber}
-                onChange={handleChange}
+                value={phonenumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
-              {errors.PhoneNumber && <p className="errors">{errors.PhoneNumber}</p>}
+              {/* {errors.PhoneNumber && <p className="errors">{errors.PhoneNumber}</p>} */}
             </div>
             <div>
-
-              <button
-                className="submit"
-              >
-
-                Signup
-              </button>
+              <button className="submit">Signup</button>
               <br />
               <div>
-                <Link to="/Login"> <p>Already have an Account--Login</p></Link>
-                
+                <Link to="/Login">
+                  {" "}
+                  <p>Already have an Account--Login</p>
+                </Link>
               </div>
             </div>
           </form>

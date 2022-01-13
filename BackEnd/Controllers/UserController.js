@@ -1,82 +1,68 @@
-const UserSchema = require("../Model/User");
+const userschema = require("../models/userschema");
 
-const getAlluser = async (req, res, next) => {
-  let users;
-  try {
-    users = await UserSchema.find();
-  } catch (err) {
-    console.log(err);
-  }
-  res.json(users);
-};
-
-const postUser = async (req, res, next) => {
-  const { name, email, password } = req.body;
-
-  const newUser = new UserSchema({
+const register = async (req, res) => {
+  const { name, password, email, phonenumber } = req.body;
+  const newUser = new userschema({
     name: name,
-    email: email,
     password: password,
+    email: email,
+    phonenumber: phonenumber,
   });
+
   try {
     await newUser.save();
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ error: "Signup Failed", errorDetail: err });
+    return
   }
 
-  res.json(newUser);
+  res.status(201).json({ message: "Signup Success" });
 };
 
-const getUserByid = async (req, res, next) => {
-  const { uid } = req.params;
+const login = async (req, res) => {
   let user;
+
   try {
-    user = await UserSchema.findById(uid);
+    user = await userschema.findOne({ email: req.params.email });
   } catch (err) {
     console.log(err);
   }
-  res.json(user);
+  if (!user || req.params.password !== user.password) {
+    res.status(401).json({ error: "Invalid Email or password" });
+    return;
+  } else {
+    res.json(user);
+  }
 };
 
-const getUserByname = async (req, res, next) => {
-  const name = req.params.name;
-  const age = req.params.age;
+const getUserById = async (req, res) => {
+  let user;
 
   try {
-    user = await UserSchema.find({ name: name, age: { $gte: 12 } });
+    user = await userschema.findById(req.params.id);
   } catch (err) {
     console.log(err);
   }
-  res.json(user);
+
+  res.json({ user: user });
 };
 
-const dltUserByid = async (req, res, next) => {
-  const uid = req.params.uid;
+const updateUser = async (req, res) => {
+  const { uid, address } = req.body;
+  
   try {
-    user = await UserSchema.findByIdAndDelete({ _id: uid });
+    result = await userschema.findByIdAndUpdate(uid, {
+      address: address,
+    });
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ message: "Failed" });
+    return;
   }
-  res.json({ user: "Deleted" });
+
+  res.json({ message: "User Info Updated Successfully" });
 };
 
-
-const updtUserByid = async (req, res, next) => {
-  const {name,email,password,id}=req.body;
-  let newUser
-  try {
-  newUser=await UserSchema.findByIdAndUpdate(id,{name:name,email:email,password:password})
-
-  } catch (err) {
-    console.log(err);
-  }
-  res.json({ user: newUser });
-};
-
-
-exports.getAlluser = getAlluser;
-exports.postUser = postUser;
-exports.getUserByid = getUserByid;
-exports.getUserByname = getUserByname;
-exports.dltUserByid = dltUserByid;
-exports.updtUserByid=updtUserByid;
+exports.getUserById = getUserById;
+exports.register = register;
+exports.login = login;
+exports.updateUser = updateUser;

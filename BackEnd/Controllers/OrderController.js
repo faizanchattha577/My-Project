@@ -1,35 +1,21 @@
-const OrderSchema = require("../Model/OrderSchema");
+const orderScehma = require("../models/orderSchema")
 
+const addItem = async (req, res) => {
+    const { order, uid } = req.body;
+    const newItem = new orderScehma({
+        order: order,
+        user: uid
+    });
 
-const addorder = async (req, res, next) => {
-  const { userid, date, paymentMethod,p_Detail, Services} = req.body;
+    try {
+        await newItem.save();
+    } catch (err) {
+        res.status(400).json({ error: "Failed", errorDetail: err });
+        return
+    }
 
-  const newUser = new UserSchema({
-   userid:userid,
-    date: date,
-    paymentMethod: paymentMethod,
-    p_Detail:p_Detail,
-    Services:Services
-  });
-  try {
-    await newUser.save();
-  } catch (err) {
-    console.log(err);
-  }
-
-  res.json(newUser);
+    res.status(201).json({ message: "Order Confirmed" });
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-exports.addorder = addorder;
+exports.addItem = addItem
